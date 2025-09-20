@@ -207,8 +207,16 @@ int bitMatch(int x, int y) {
  *   Max ops: 14
  *   Rating: 1
  */
-int bitXor(int x, int y) {
-  return 2;
+/*
+Aurora Hodar
+Xor is recreated with ~ and & by first finding two expressions. 
+The first, ~(x & y) returns false only when x and y are both true, while
+the second ~(~x & ~y) does the opposite, and returns false 
+only when x and y are both false. Thus, combining them
+with & returns true only when only one of x or y are true*/
+int bitXor(int x, int y) 
+{
+  return ~(x & y) & ~(~x & ~y);
 }
 //2
 /* 
