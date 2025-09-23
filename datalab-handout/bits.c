@@ -170,7 +170,7 @@ NOTES:
    - 285 hentaigana
    - 3 additional Zanabazar Square characters */
 //1
-/* 
+/* Khai Le
  * bitAnd - x&y using only ~ and | 
  *   Example: bitAnd(6, 5) = 4
  *   Legal ops: ~ |
@@ -178,7 +178,12 @@ NOTES:
  *   Rating: 1
  */
 int bitAnd(int x, int y) {
-  return 2;
+    
+    // I accidentally do this part. Read Joel description for this function.
+    // My description: it's basically (not (not a or not b)), which is a and b.
+    int result = ~(~x | ~y);
+    
+    return result;
 }
 /* 
  * tmin - return minimum two's complement integer 
@@ -189,7 +194,7 @@ int bitAnd(int x, int y) {
 int tmin(void) {
   return 2;
 }
-/* 
+/* Khai Le
  * bitMatch - Create mask indicating which bits in x match those in y
  *            using only ~ and & 
  *   Example: bitMatch(0x7, 0xE) = 0x6
@@ -198,7 +203,14 @@ int tmin(void) {
  *   Rating: 1
  */
 int bitMatch(int x, int y) {
-  return 2;
+    
+    // Find which bit couple has different values first.
+    int mask = bitXor(x, y);
+    
+    // Then find the one that actually match.
+    mask = ~mask;
+    
+    return mask;
 }
 /* 
  * bitXor - x^y using only ~ and & 
@@ -216,7 +228,7 @@ only when x and y are both false. Thus, combining them
 with & returns true only when only one of x or y are true*/
 int bitXor(int x, int y) 
 {
-  return ~(x & y) & ~(~x & ~y);
+    return ~(x & y) & ~(~x & ~y);
 }
 //2
 /* 
@@ -241,7 +253,7 @@ int implication(int x, int y) {
 int negate(int x) {
   return 2;
 }
-/* 
+/* Khai Le
  * isPositive - return 1 if x > 0, return 0 otherwise 
  *   Example: isPositive(-1) = 0.
  *   Legal ops: ! ~ & ^ | + << >>
@@ -249,7 +261,23 @@ int negate(int x) {
  *   Rating: 2
  */
 int isPositive(int x) {
-  return 2;
+    
+    // We have two checks here: to see if x is not negative, and see if x is not 0.
+    // For x not negative check, we have '!((x >> 31) & 1)'. Basically,
+    // Since the types have 4 bytes. which is 32 bits, I use '>>' to move all
+    // the way to the first bit, which according to Google, is the sign that
+    // dictate x to be negative or not. Then I do an '&' operation of that and
+    // 1. If it's negative (aka 1), the result will be 1 (since 1 announce the number
+    // as negative), and 0 for vice versa. The '!' operator will check result, and
+    // return 1 if it's not a negative, and vice versa. As for '!!x', it checks
+    // for the x=0 case specifically. The first '!' essentially convert x to 0 and
+    // 1 form. Basically, if x is not 0, return 0, and vice versa. The second '!'
+    // check the result, and check true if the result tell x is not 0, and vice
+    // versa. Finally, we use '&' to check the two conditions. If both are 1, that
+    // means x is positive, and we return 1. If not, return 0.
+    int result = (!((x >> 31) & 1)) & (!!x);
+    
+    return result;
 }
 /*
  * isPallindrome - Return 1 if bit pattern in x is equal to its mirror image
@@ -258,7 +286,42 @@ int isPositive(int x) {
  *   Max ops: 45
  *   Rating: 4
  */
+
+// NOTE: this one is not done! I haven't put the printBinary (cause I don't have it) function in.
+// If sopmeone can do that that would be great.
 int isPallindrome(int x) {
+    int hi16, lo16;
+    int mask;
+    int lo8, lo4, lo2, lo1;
+    x = 0xCA87E153;
+    
+    // Step 1: isolate the upper 16 bits and shift right.
+    mask = (0xFF << 8) | 0xFF;
+    hi16 = (x >> 16) & mask;
+    printf("hi16 = ");
+    printBinary(hi16);
+    
+    // Step 2: isolate the lower 16 bits.
+    lo16 = x & mask;
+    printf("lo16 = ");
+    printBinary(lo16);
+    
+    // Step 3: swap groups of 8 bits in lower half.
+    mask = 0xFF;
+    
+    lo8 = (lo16 & mask) << 8;
+    lo8 = lo8 | ((lo16 >> 8) & mask);
+    printf("lo8 = ");
+    printBinary(lo8);
+    
+    // Step 4: swap 2 groups of 4 bits in lower half.
+    mask = (0xF << 8) | 0xF;
+    
+    lo4 = (lo8 & mask) << 4;
+    lo4 = lo4 | ((lo8 >> 4) & mask);
+    printf("lo4 = ");
+    printBinary(lo4);
+    
     return 2;
 }
 //3
