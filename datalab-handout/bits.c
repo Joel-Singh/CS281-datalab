@@ -170,19 +170,27 @@ NOTES:
    - 285 hentaigana
    - 3 additional Zanabazar Square characters */
 //1
-/* Khai Le
+/*
  * bitAnd - x&y using only ~ and | 
  *   Example: bitAnd(6, 5) = 4
  *   Legal ops: ~ |
  *   Max ops: 8
  *   Rating: 1
  */
+/*
+ * Kai Lee
+ * We can do the "and" operation using only negation and disjunction by
+ * negating `x & y` twice and then using De'Morgan's Law to replace the "and"
+ * into an "or". See the following boolean algebra:
+ * x & y = ~~(x & y)
+ *       = ~((~x) | (~y)) [De'Morgan's Law]
+ *
+ * The above shows `x & y` is equivalent to `~((~x) | (~y))` which only uses
+ * negation and disjunction.
+ * */
 int bitAnd(int x, int y) {
-    
-    // I accidentally do this part. Read Joel description for this function.
-    // My description: it's basically (not (not a or not b)), which is a and b.
     int result = ~(~x | ~y);
-    
+
     return result;
 }
 /* 
