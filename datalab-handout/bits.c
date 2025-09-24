@@ -289,6 +289,8 @@ int isPositive(int x) {
 
 // NOTE: this one is not done! I haven't put the printBinary (cause I don't have it) function in.
 // If sopmeone can do that that would be great.
+//
+// NOTE: JOEL: Commented out the `printBinary`s for now so the program compiles
 int isPallindrome(int x) {
     int hi16, lo16;
     int mask;
@@ -299,12 +301,12 @@ int isPallindrome(int x) {
     mask = (0xFF << 8) | 0xFF;
     hi16 = (x >> 16) & mask;
     printf("hi16 = ");
-    printBinary(hi16);
+    // printBinary(hi16);
     
     // Step 2: isolate the lower 16 bits.
     lo16 = x & mask;
     printf("lo16 = ");
-    printBinary(lo16);
+    // printBinary(lo16);
     
     // Step 3: swap groups of 8 bits in lower half.
     mask = 0xFF;
@@ -312,7 +314,7 @@ int isPallindrome(int x) {
     lo8 = (lo16 & mask) << 8;
     lo8 = lo8 | ((lo16 >> 8) & mask);
     printf("lo8 = ");
-    printBinary(lo8);
+    // printBinary(lo8);
     
     // Step 4: swap 2 groups of 4 bits in lower half.
     mask = (0xF << 8) | 0xF;
@@ -320,7 +322,7 @@ int isPallindrome(int x) {
     lo4 = (lo8 & mask) << 4;
     lo4 = lo4 | ((lo8 >> 4) & mask);
     printf("lo4 = ");
-    printBinary(lo4);
+    // printBinary(lo4);
     
     return 2;
 }
