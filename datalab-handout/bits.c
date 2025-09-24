@@ -191,8 +191,20 @@ int bitAnd(int x, int y) {
  *   Max ops: 4
  *   Rating: 1
  */
+/*
+ * Joel Singh
+ * The minimum two's complement integer is 0x80000000, or in binary is 1
+ * followed by 31 zeroes. This is because in two's complement, every bit
+ * represents a positive value except for the leftmost bit which has a negative
+ * weight. Through simple logic, the minimum two's complement integer must be a
+ * binary number where only the negative bit is 1.
+ *
+ * Because we are restricted in our size of constants, we can't simply return
+ * 0x80000000. We can instead take 1, and shift it 31 to the left to yield
+ * 0x80000000.
+ * */
 int tmin(void) {
-  return 2;
+  return 1 << 31;
 }
 /* Khai Le
  * bitMatch - Create mask indicating which bits in x match those in y
