@@ -178,7 +178,7 @@ NOTES:
  *   Rating: 1
  */
 /*
- * Kai Lee
+ * Khai Le
  * We can do the "and" operation using only negation and disjunction by
  * negating `x & y` twice and then using De'Morgan's Law to replace the "and"
  * into an "or". See the following boolean algebra:
@@ -225,7 +225,8 @@ int tmin(void) {
 int bitMatch(int x, int y) {
     
     // Find which bit couple has different values first.
-    int mask = bitXor(x, y);
+    // Look at the description for XOR function for explanation.
+    int mask = ~(x & y) & ~(~x & ~y);
     
     // Then find the one that actually match.
     mask = ~mask;
@@ -285,9 +286,9 @@ int isPositive(int x) {
     // We have two checks here: to see if x is not negative, and see if x is not 0.
     // For x not negative check, we have '!((x >> 31) & 1)'. Basically,
     // Since the types have 4 bytes. which is 32 bits, I use '>>' to move all
-    // the way to the first bit, which according to Google, is the sign that
-    // dictate x to be negative or not. Then I do an '&' operation of that and
-    // 1. If it's negative (aka 1), the result will be 1 (since 1 announce the number
+    // the way to the first bit, which is the sign that dictate
+    // x to be negative or not. Then I do an '&' operation of that and 1.
+    // If it's negative (aka 1), the result will be 1 (since 1 announce the number
     // as negative), and 0 for vice versa. The '!' operator will check result, and
     // return 1 if it's not a negative, and vice versa. As for '!!x', it checks
     // for the x=0 case specifically. The first '!' essentially convert x to 0 and
