@@ -390,10 +390,29 @@ int isPallindrome(int x)
  *   Legal ops: ~ & ^ | + << >>
  *   Max ops: 12
  *   Rating: 4
+ *
+ * Cole Clodgo, Khai Lee, Joel Singh
+ * Finds the absolute value of x and makes it negative
+ * If x is 0, will still be 0
+ * If x is anything else, will have a leading 1 (seen as -1 because of two's complement)
+ * Can use a NOT operator and add 1 to get 1 is nonzero, will still be 0 if x is 0
+ * Finally, use XOR with 1 to flip to the proper output
  */
 int bang(int x)
 {
-   return 2;
+	// Get the absolute value of x
+	int y;
+  	y = x >> 31;
+    x = (x + (x >> 31)) ^ y;
+    
+    // make the absolute value negative
+    // - if x is 0, will still be 0
+    // - otherwise x will have a leading 1
+    x = ~x + 1;
+    
+    // when x is nonzero, x >> 31 gives -1
+    // XOR with 1 flips the bit so we get 1 when x=0, and 0 otherwise
+    return (~(x >> 31) + 1) ^ 1;
 }
 /*
  * absVal - absolute value of x
