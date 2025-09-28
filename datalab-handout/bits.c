@@ -266,7 +266,7 @@ Cole Clodgo
  */
 int implication(int x, int y)
 {
-   return x^1 | y;
+   return (x^1) | y;
 }
 /*
  * negate - return -x
