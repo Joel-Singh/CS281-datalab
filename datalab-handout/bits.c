@@ -282,10 +282,15 @@ int bitXor(int x, int y)
  *   Legal ops: ! ~ ^ |
  *   Max ops: 5
  *   Rating: 2
+ *
+ * Cole Clodgo
+ * x -> y is the same as (not x) or y
+ * x^1 flips a 1 to a 0 or a 0 to a 1,
+ * which gives us not x
  */
 int implication(int x, int y)
 {
-   return 2;
+   return (x^1) | y;
 }
 /*
  * negate - return -x
