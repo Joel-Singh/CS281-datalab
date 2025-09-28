@@ -434,7 +434,7 @@ which is the equivalent of flipping the bits
 */
 int absVal(int x)
 {
-   int y, var;
+   int y;
    
    // Step 1: Isolate the leftmost bit of x (which determines if x is positive or negative),
    // and negate it so that y = 1 if x is negative or y = 0 if x is positive
