@@ -292,21 +292,24 @@ int implication(int x, int y)
 {
    return (x^1) | y;
 }
+
 /*
  * negate - return -x
  *   Example: negate(1) = -1.
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 5
  *   Rating: 2
+*
+   Isabella Rivera
+   A negation is created by using tilde which takes one number and inverts all the 
+   bits of the inputed int (gets us to one's complement) and adding one to give us
+   the signed two's complement 
  */
 int negate(int x)
 {
-   /* Uses two's complement: -x == ~x + 1 */
-   int flipped = ~x;
-   int result = flipped + 1;
-   return result;
-   return 2;
+   return ~x +1
 }
+
 /* Khai Le
  * isPositive - return 1 if x > 0, return 0 otherwise
  *   Example: isPositive(-1) = 0.
@@ -427,9 +430,11 @@ Aurora Hodar, Isabella Rivera, Cole Clodgo
 absVal returns the absolute value of an inputted integer x, by
 isolating the leftmost bit of x and adding it to 0xFFFFFFFF to create 
 a desired mask of 1s or 0s, matching that leftmost bit. 
-We then return the result of XOR against that mask and either x (if positive),
+
+Returns the result of XOR against that mask and either x (if positive),
 or x - 1 (if negative).
-This is achieved by adding x + (x >> 31), which again results in integer overflow and subtracts 1,
+
+This is achieved by adding x + (x >> 31), results in integer overflow and subtracts 1,
 which is the equivalent of flipping the bits 
 */
 int absVal(int x)
