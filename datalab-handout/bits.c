@@ -255,6 +255,7 @@ int bitXor(int x, int y)
 }
 // 2
 /*
+Cole Clodgo
  * implication - return x -> y in propositional logic - 0 for false, 1
  * for true
  *   Example: implication(1,1) = 1
@@ -265,7 +266,7 @@ int bitXor(int x, int y)
  */
 int implication(int x, int y)
 {
-   return 2;
+   return x^1 | y;
 }
 /*
  * negate - return -x
