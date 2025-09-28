@@ -169,6 +169,26 @@ NOTES:
    - 285 hentaigana
    - 3 additional Zanabazar Square characters */
 // 1
+
+// void	printBinary	( int x )
+// {
+// 	for ( int i = 31; i >= 0; i--)
+// 	{
+// 		int b = (x >> i);
+// 		b = b & 1;
+
+// 		if (i % 4 == 3)
+// 		{
+// 			printf(" ");
+// 		}
+// 		printf("%d",b);
+// 	}
+// 	printf("\n");
+
+// }
+
+
+
 /*
  * bitAnd - x&y using only ~ and |
  *   Example: bitAnd(6, 5) = 4
@@ -378,7 +398,33 @@ int bang(int x)
  *   Max ops: 10
  *   Rating: 4
  */
+/*
+Aurora Hodar, Isabella Rivera, Cole Clodgo
+
+*/
 int absVal(int x)
 {
-   return 2;
+   int y, var;
+   
+   // Step 1: Isolate the leftmost bit of x (which determines if x is positive or negative),
+   // and negate it so that y = 1 if x is negative or y = 0 if x is positive
+   y = !(x >> 31);
+   // Step 2: Make a var of repeating 1s
+   var = ~0;
+   
+   // Step 3: If y == 1, this results in integer overflow and y will be a mask of repeating 0s.
+   // Otherwise, y = var and can be used as a mask of repeating 1s.
+   y = y + var;
+   
+   // Step 4: Add the leftmost bit of x to x,
+   printBinary(x);
+   printBinary((x >> 31));
+   printBinary(x + (x >> 31));
+   return (x + (x >> 31)) ^ y;
 }
+// 1110 = -2
+// flip
+// 0001 + 1 = 0010 (2)
+
+// 1110 + 1 = 1111
+// 0000
