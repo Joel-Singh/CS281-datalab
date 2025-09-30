@@ -456,14 +456,3 @@ int absVal(int x)
    // if x is positive, then y is repeating 0s, so (x + y) = x, and x ^ y just returns x
    return (x + y) ^ y;
 }
-
-   // printBinary(x);
-   // printBinary((x >> 31));
-   // printBinary(x + (x >> 31));
-
-// 1110 = -2
-// flip
-// 0001 + 1 = 0010 (2)
-
-// 1110 + 1 = 1111
-// 0000
