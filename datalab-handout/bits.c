@@ -427,38 +427,34 @@ int bang(int x)
  */
 /*
 Aurora Hodar, Isabella Rivera, Cole Clodgo
-absVal returns the absolute value of an inputted integer x, by
-isolating the leftmost bit of x and adding it to 0xFFFFFFFF to create 
-a desired mask of 1s or 0s, matching that leftmost bit. 
 
-Returns the result of XOR against that mask and either x (if positive),
-or x - 1 (if negative).
+absVal returns the absolute value of an inputted int x by creating
+a mask y of repeating 1s or 0s, matching the most significant bit 
+of x.
 
-This is achieved by adding x + (x >> 31), results in integer overflow and subtracts 1,
-which is the equivalent of flipping the bits 
+x is then added to y, which results in x if x is positive, or x - 1 due 
+to integer overflow if x is negative. (x - 1 referring to the unsigned bits, not the equivalent signed decimal value)
+
+This works because normal two's complement instructions would be to flip x then add 1,
+but the same is achieved by subtracting 1 then flipping.
+Ex: 1110 (-2) -> flip -> 0001 -> +1 -> 0010 (2)
+vs  1110 (-2) -> -1 -> 1101 -> flip -> 0010 (2)
+
+x ^ y is then returned, which will flip every bit of x if needed, or leave it alone if not. 
 */
 int absVal(int x)
 {
    int y;
    
-   // Step 1: Isolate the leftmost bit of x (which determines if x is positive or negative),
-   // and negate it so that y = 1 if x is negative or y = 0 if x is positive
+   // Step 1: Assign an int y to x right shifted 31 spots. This leaves the only original bit
+   // to be the most significant bit of x (which determines if x is positive or negative),
+   // and the rest of the bits shifted in copy that original bit 
    y = (x >> 31);
 
-   // Step 2: Make a var of repeating 1s
-   // var = ~0;
-   
-   // Step 3: If y == 1, this results in integer overflow and y will be a mask of repeating 0s.
-   // Otherwise, y = var and can be used as a mask of repeating 1s.
-   // y = y + var;
-   
-   // Step 4: if x is negative, then x >> 31 is 11...1, which when added to x,
-   // causes integer overflow and results in x - 1 (in two's complement)
-   // 1110 (-2) becomes 1101 (-3)
-   // If x is positive, this addition changes nothing.
-   // Then there is an XOR flip against the y mask to 
-   // return the absolute value of x.
-   return (x + (x >> 31)) ^ y;
+   // Step 2: if x is originally negative, y is repeating 1s, so (x + y) represents
+   // x - 1, because there is integer overflow back to zero, and then ^ y will flip all the bits.
+   // if x is positive, then y is repeating 0s, so (x + y) = x, and x ^ y just returns x
+   return (x + y) ^ y;
 }
 
    // printBinary(x);
