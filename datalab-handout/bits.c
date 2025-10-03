@@ -170,24 +170,6 @@ NOTES:
    - 3 additional Zanabazar Square characters */
 // 1
 
-void	printBinary	( int x )
-{
-	for ( int i = 31; i >= 0; i--)
-	{
-		int b = (x >> i);
-		b = b & 1;
-
-		if (i % 4 == 3)
-		{
-			printf(" ");
-		}
-		printf("%d",b);
-	}
-	printf("\n");
-
-}
-
-
 
 /*
  * bitAnd - x&y using only ~ and |
