@@ -449,19 +449,19 @@ int isPallindrome(int x)
  */
 int bang(int x)
 {
-	// Get the absolute value of x
-	int y;
-  	y = x >> 31;
-    x = (x + (x >> 31)) ^ y;
-    
-    // make the absolute value negative
-    // - if x is 0, will still be 0
-    // - otherwise x will have a leading 1
-    x = ~x + 1;
-    
-    // when x is nonzero, x >> 31 gives -1
-    // XOR with 1 flips the bit so we get 1 when x=0, and 0 otherwise
-    return (~(x >> 31) + 1) ^ 1;
+   // Get the absolute value of x
+   int y;
+   y = x >> 31;
+   x = (x + (x >> 31)) ^ y;
+
+   // make the absolute value negative
+   // - if x is 0, will still be 0
+   // - otherwise x will have a leading 1
+   x = ~x + 1;
+
+   // when x is nonzero, x >> 31 gives -1
+   // XOR with 1 flips the bit so we get 1 when x=0, and 0 otherwise
+   return (~(x >> 31) + 1) ^ 1;
 }
 /*
  * absVal - absolute value of x
