@@ -342,7 +342,7 @@ int isPositive(int x)
 
    return result;
 }
-/*
+/* Aurora Hodar
  * isPallindrome - Return 1 if bit pattern in x is equal to its mirror image
  *   Example: isPallindrome(0x01234567E6AC2480) = 1
  *   Legal ops: ! ~ & ^ | + << >>
@@ -350,92 +350,49 @@ int isPositive(int x)
  *   Rating: 4
  */
 
-// NOTE: this one is not done! I haven't put the printBinary (cause I don't have it) function in.
-// If sopmeone can do that that would be great.
-//
-// NOTE: JOEL: Commented out the `printBinary`s for now so the program compiles
+/* We find if x is a palindrome by taking the first 16 bits and the last. We
+ * then flip the last 16 bits and compare it to the first 16 to see if they're
+ * the same.
+ * */
 int isPallindrome(int x)
 {
    int hi16;
    int mask;
    int lo16, lo8, lo4, lo2, lo1;
-   // x = 0xCA87E153;
 
-   printf("x = ");
-   printBinary(x);
    // Step 1: isolate the upper 16 bits and shift right.
    mask = (0xFF << 8) | 0xFF;
    hi16 = (x >> 16) & mask;
-   printf("hi16 = ");
-   printBinary(hi16);
 
    // Step 2: isolate the lower 16 bits.
    lo16 = x & mask;
-   // lo16 = (x << 16) >> 16;
 
-   printf("lo16 = ");
-   printBinary(lo16);
-
-   // Step 3: swap groups of 8 bits in lower half.
+   // Step 3: swap groups of 8 bits.
    mask = 0xFF;
 
    // we don't need to & mask here because it just sends things out of range and is taken care of next step
    lo8 = (lo16) << 8;
    lo8 = lo8 | ((lo16 >> 8) & mask);
-   printf("lo8 = ");
-   printBinary(lo8);
 
-   // Step 4: swap groups of 8 bits in upper half.
-   // hi8 = (hi16) << 8; // we don't need to & mask here because it just sends things out of range and is taken care of next step
-   // hi8 = hi8 | ((hi16 >> 8) & mask);
-   // printf("hi8 = ");
-   // printBinary(hi8);
-
-   // Step 5: swap 2 groups of 4 bits in lower half.
+   // Step 4: swap 2 groups of 4 bits.
    mask = (0xF << 8) | 0xF;
 
    lo4 = (lo8 & mask) << 4;
    lo4 = lo4 | ((lo8 >> 4) & mask);
-   printf("lo4 = ");
-   printBinary(lo4);
 
-   // Step 6: swap 2 groups of 4 bits in upper half.
-   // hi4 = (hi8 & mask) << 4;
-   // hi4 = hi4 | ((hi8 >> 4) & mask);
-   // printf("hi4 = ");
-   // printBinary(hi4);
-
-   // Step 7: swap groups of 2 bits in lower half.
+   // Step 5: swap groups of 2 bits.
    mask = (0x33 << 8) | 0x33;
 
    lo2 = (lo4 & mask) << 2;
-   // hi2 = (hi4 & mask) << 2;
-   
-   // hi2 = hi2 | ((hi4 >> 2) & mask);
    lo2 = lo2 | ((lo4 >> 2) & mask);
-   printf("lo2 = ");
-   printBinary(lo2);
 
-   // Step 8: swap groups of 2 bits in upper half.
-   
-   // printf("hi2 = ");
-   // printBinary(hi2);
-
-   // Step 9: swap groups of 1 bit in lower half.
+   // Step 6: swap groups of 1 bit.
    mask = (0x55 << 8) | 0x55;
 
    lo1 = (lo2 & mask) << 1;
    lo1 = lo1 | ((lo2 >> 1) & mask);
-   printf("lo1 = ");
-   printBinary(lo1);
-   
-   // Step 10: swap groups of 1 bit in upper half.
-   // hi1 = (hi2 & mask) << 1;
-   // hi1 = hi1 | ((hi2 >> 1) & mask);
-   // printf("hi1 = ");
-   // printBinary(hi1);
-   // printBinary(hi1 | (lo1 << 16));
 
+   // Xor and then boolean inversion tells us if lo1 and hi16 are the same.
    return !(lo1 ^ hi16);
 }
 // 3
