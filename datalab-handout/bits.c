@@ -364,13 +364,15 @@ int isPallindrome(int x)
    printf("x = ");
    printBinary(x);
    // Step 1: isolate the upper 16 bits and shift right.
-   mask = (0xFF << 8) | 0xFF;
+   // mask = (0xFF << 8) | 0xFF;
    hi16 = (x >> 16);// & mask;
    printf("hi16 = ");
    printBinary(hi16);
 
    // Step 2: isolate the lower 16 bits.
-   lo16 = x & mask;
+   // lo16 = x & mask;
+   lo16 = (x << 16) >> 16;
+
    printf("lo16 = ");
    printBinary(lo16);
 
@@ -379,7 +381,7 @@ int isPallindrome(int x)
 
    // we don't need to & mask here because it just sends things out of range and is taken care of next step
    lo8 = (lo16) << 8;
-   lo8 = lo8 | ((lo16 >> 8));
+   lo8 = lo8 | ((lo16 >> 8) & mask);
    printf("lo8 = ");
    printBinary(lo8);
 
@@ -407,13 +409,15 @@ int isPallindrome(int x)
    mask = (0x33 << 8) | 0x33;
 
    lo2 = (lo4 & mask) << 2;
+   hi2 = (hi4 & mask) << 2;
+   
+   hi2 = hi2 | ((hi4 >> 2) & mask);
    lo2 = lo2 | ((lo4 >> 2) & mask);
    printf("lo2 = ");
    printBinary(lo2);
 
    // Step 8: swap groups of 2 bits in upper half.
-   hi2 = (hi4 & mask) << 2;
-   hi2 = hi2 | ((hi4 >> 2) & mask);
+   
    printf("hi2 = ");
    printBinary(hi2);
 
