@@ -1,7 +1,7 @@
 /*
  * CS:APP Data Lab
  *
- * <Please put your name and userid here>
+ * <Aurora, Cole, Isabella, Joel, and Khai>
  *
  * bits.c - Source file with your solutions to the Lab.
  *          This is the file you will hand in to your instructor.
@@ -304,25 +304,22 @@ int negate(int x)
  *   Max ops: 8
  *   Rating: 2
  */
+/*
+ * To check if x is positive there are three cases: x can be negative, positive
+ * or zero. If we confirm that x is not negative and not zero, then it must be
+ * positive.
+ * */
 int isPositive(int x)
 {
+   // We check if the sign bit is 1, if so, then x must be negative. To do so, we isolate
+   // the leading bit with ">> 31" and take the boolean inverse.
+   int not_negative = !(x >> 31);
 
-   // We have two checks here: to see if x is not negative, and see if x is not 0.
-   // For x not negative check, we have '!((x >> 31) & 1)'. Basically,
-   // Since the types have 4 bytes. which is 32 bits, I use '>>' to move all
-   // the way to the first bit, which is the sign that dictate
-   // x to be negative or not. Then I do an '&' operation of that and 1.
-   // If it's negative (aka 1), the result will be 1 (since 1 announce the number
-   // as negative), and 0 for vice versa. The '!' operator will check result, and
-   // return 1 if it's not a negative, and vice versa. As for '!!x', it checks
-   // for the x=0 case specifically. The first '!' essentially convert x to 0 and
-   // 1 form. Basically, if x is not 0, return 0, and vice versa. The second '!'
-   // check the result, and check true if the result tell x is not 0, and vice
-   // versa. Finally, we use '&' to check the two conditions. If both are 1, that
-   // means x is positive, and we return 1. If not, return 0.
-   int result = (!((x >> 31) & 1)) & (!!x);
+   // We take the boolean inverse of x twice. If x is 0, this results in 0, otherwise, it becomes 1.
+   int not_zero = !!x;
 
-   return result;
+   // Finally, if x is not negative and not zero, it must be positive.
+   return not_negative & not_zero;
 }
 /* Aurora Hodar
  * isPallindrome - Return 1 if bit pattern in x is equal to its mirror image
@@ -377,8 +374,6 @@ int isPallindrome(int x)
    // Xor and then boolean inversion tells us if lo1 and hi16 are the same.
    return !(lo1 ^ hi16);
 }
-// 3
-// 4
 /*
  * bang - Compute !x without using !
  *   Examples: bang(3) = 0, bang(0) = 1
@@ -395,19 +390,19 @@ int isPallindrome(int x)
  */
 int bang(int x)
 {
-	// Get the absolute value of x
-	int y;
-  	y = x >> 31;
-    x = (x + (x >> 31)) ^ y;
-    
-    // make the absolute value negative
-    // - if x is 0, will still be 0
-    // - otherwise x will have a leading 1
-    x = ~x + 1;
-    
-    // when x is nonzero, x >> 31 gives -1
-    // XOR with 1 flips the bit so we get 1 when x=0, and 0 otherwise
-    return (~(x >> 31) + 1) ^ 1;
+   // Get the absolute value of x
+   int y;
+   y = x >> 31;
+   x = (x + (x >> 31)) ^ y;
+
+   // make the absolute value negative
+   // - if x is 0, will still be 0
+   // - otherwise x will have a leading 1
+   x = ~x + 1;
+
+   // when x is nonzero, x >> 31 gives -1
+   // XOR with 1 flips the bit so we get 1 when x=0, and 0 otherwise
+   return (~(x >> 31) + 1) ^ 1;
 }
 /*
  * absVal - absolute value of x
