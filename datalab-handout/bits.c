@@ -169,7 +169,7 @@ NOTES:
    - 285 hentaigana
    - 3 additional Zanabazar Square characters */
 // 1
-
+/*
 void	printBinary	( int x )
 {
 	for ( int i = 31; i >= 0; i--)
@@ -186,7 +186,7 @@ void	printBinary	( int x )
 	printf("\n");
 
 }
-
+*/
 
 
 /*
@@ -351,57 +351,82 @@ int isPositive(int x)
 // NOTE: JOEL: Commented out the `printBinary`s for now so the program compiles
 int isPallindrome(int x)
 {
-   int hi16, lo16;
+   int hi16, hi8, hi4, hi2, hi1;
    int mask;
-   int lo8, lo4, lo2, lo1;
-   x = 0xCA87E153;
+   int lo16, lo8, lo4, lo2, lo1;
+   // x = 0xCA87E153;
 
-   printBinary(x);
+   // printf("x = ");
+   // printBinary(x);
    // Step 1: isolate the upper 16 bits and shift right.
    mask = (0xFF << 8) | 0xFF;
    hi16 = (x >> 16) & mask;
-   printf("hi16 = ");
-   printBinary(hi16);
+   // printf("hi16 = ");
+   // printBinary(hi16);
 
    // Step 2: isolate the lower 16 bits.
    lo16 = x & mask;
-   printf("lo16 = ");
-   printBinary(lo16);
+   // printf("lo16 = ");
+   // printBinary(lo16);
 
    // Step 3: swap groups of 8 bits in lower half.
    mask = 0xFF;
 
    lo8 = (lo16 & mask) << 8;
    lo8 = lo8 | ((lo16 >> 8) & mask);
-   printf("lo8 = ");
-   printBinary(lo8);
+   // printf("lo8 = ");
+   // printBinary(lo8);
 
-   // Step 4: swap 2 groups of 4 bits in lower half.
+   // Step 4: swap groups of 8 bits in upper half.
+   hi8 = (hi16 & mask) << 8;
+   hi8 = hi8 | ((hi16 >> 8) & mask);
+   // printf("hi8 = ");
+   // printBinary(hi8);
+
+   // Step 5: swap 2 groups of 4 bits in lower half.
    mask = (0xF << 8) | 0xF;
 
    lo4 = (lo8 & mask) << 4;
    lo4 = lo4 | ((lo8 >> 4) & mask);
-   printf("lo4 = ");
-   printBinary(lo4);
+   // printf("lo4 = ");
+   // printBinary(lo4);
 
+   // Step 6: swap 2 groups of 4 bits in upper half.
+   hi4 = (hi8 & mask) << 4;
+   hi4 = hi4 | ((hi8 >> 4) & mask);
+   // printf("hi4 = ");
+   // printBinary(hi4);
 
-   // Step 5: swap groups of 2 bits in lower half.
+   // Step 7: swap groups of 2 bits in lower half.
    mask = (0x33 << 8) | 0x33;
 
    lo2 = (lo4 & mask) << 2;
    lo2 = lo2 | ((lo4 >> 2) & mask);
-   printf("lo2 = ");
-   printBinary(lo2);
+   // printf("lo2 = ");
+   // printBinary(lo2);
 
-   // Step 6: swap groups of 1 bit in lower half.
+   // Step 8: swap groups of 2 bits in upper half.
+   hi2 = (hi4 & mask) << 2;
+   hi2 = hi2 | ((hi4 >> 2) & mask);
+   // printf("hi2 = ");
+   // printBinary(hi2);
+
+   // Step 9: swap groups of 1 bit in lower half.
    mask = (0x55 << 8) | 0x55;
 
    lo1 = (lo2 & mask) << 1;
    lo1 = lo1 | ((lo2 >> 1) & mask);
-   printf("lo1 = ");
-   printBinary(lo1);
-
-   return 2;
+   // printf("lo1 = ");
+   // printBinary(lo1);
+   
+   // Step 10: swap groups of 1 bit in upper half.
+   hi1 = (hi2 & mask) << 1;
+   hi1 = hi1 | ((hi2 >> 1) & mask);
+   // printf("hi1 = ");
+   // printBinary(hi1);
+   // printBinary(hi1 | (lo1 << 16));
+   
+   return !((hi1 | (lo1 << 16)) ^ x);
 }
 // 3
 // 4
