@@ -356,16 +356,17 @@ int isPallindrome(int x)
    int lo8, lo4, lo2, lo1;
    x = 0xCA87E153;
 
+   printBinary(x);
    // Step 1: isolate the upper 16 bits and shift right.
    mask = (0xFF << 8) | 0xFF;
    hi16 = (x >> 16) & mask;
    printf("hi16 = ");
-   // printBinary(hi16);
+   printBinary(hi16);
 
    // Step 2: isolate the lower 16 bits.
    lo16 = x & mask;
    printf("lo16 = ");
-   // printBinary(lo16);
+   printBinary(lo16);
 
    // Step 3: swap groups of 8 bits in lower half.
    mask = 0xFF;
@@ -373,7 +374,7 @@ int isPallindrome(int x)
    lo8 = (lo16 & mask) << 8;
    lo8 = lo8 | ((lo16 >> 8) & mask);
    printf("lo8 = ");
-   // printBinary(lo8);
+   printBinary(lo8);
 
    // Step 4: swap 2 groups of 4 bits in lower half.
    mask = (0xF << 8) | 0xF;
@@ -381,7 +382,24 @@ int isPallindrome(int x)
    lo4 = (lo8 & mask) << 4;
    lo4 = lo4 | ((lo8 >> 4) & mask);
    printf("lo4 = ");
-   // printBinary(lo4);
+   printBinary(lo4);
+
+
+   // Step 5: swap groups of 2 bits in lower half.
+   mask = (0x33 << 8) | 0x33;
+
+   lo2 = (lo4 & mask) << 2;
+   lo2 = lo2 | ((lo4 >> 2) & mask);
+   printf("lo2 = ");
+   printBinary(lo2);
+
+   // Step 6: swap groups of 1 bit in lower half.
+   mask = (0x55 << 8) | 0x55;
+
+   lo1 = (lo2 & mask) << 1;
+   lo1 = lo1 | ((lo2 >> 1) & mask);
+   printf("lo1 = ");
+   printBinary(lo1);
 
    return 2;
 }
