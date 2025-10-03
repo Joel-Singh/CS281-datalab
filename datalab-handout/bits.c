@@ -243,14 +243,19 @@ int tmin(void)
  *   Max ops: 14
  *   Rating: 1
  */
+/* We take what is the the `xor` of `x` and `y` with the legal ops to get all
+ * the bits that are different between them. We then negate that to get all the
+ * bits that match.
+ * */
 int bitMatch(int x, int y)
 {
 
-   // Find which bit couple has different values first.
-   // Look at the description for XOR function for explanation.
+   // Find which bits have different values using `xor` recreated
+   // with only the legal ops. (See the `xor` function for an explanation.)
    int mask = ~(x & y) & ~(~x & ~y);
 
-   // Then find the one that actually match.
+   // Taking the negation of all the bits that have different values, yields
+   // all the bits that have the same values.
    mask = ~mask;
 
    return mask;
